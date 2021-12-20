@@ -46,6 +46,12 @@ class Shipment
      */
     public $shippingProductId = 0;
 
+	/**
+     * @var int
+     * @DataField(name="ShipmentType", type="int")
+     */
+	public $shipmentType = 0;
+    
     /**
      * Creates a shipment based on models
      *
