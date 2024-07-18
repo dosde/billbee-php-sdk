@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee API package.
  *
- * Copyright 2017 - 2021 by Billbee GmbH
+ * Copyright 2017 - 2020 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -17,10 +17,10 @@ use MintWare\DMM\DataField;
 class Source
 {
     /**
-     * @var int|null
+     * @var int
      * @DataField(name="Id", type="int")
      */
-    public $id = null;
+    public $id;
 
     /**
      * @var string
@@ -41,13 +41,13 @@ class Source
     public $apiAccountName = '';
 
     /**
-     * @var int|null
+     * @var int
      * @DataField(name="ApiAccountId", type="int")
      */
-    public $apiAccountId = null;
+    public $apiAccountId = '';
 
     /**
-     * @var float|null
+     * @var float
      * @DataField(name="ExportFactor", type="float")
      */
     public $exportFactor = null;
@@ -59,7 +59,7 @@ class Source
     public $stockSyncInactive = false;
 
     /**
-     * @var float|null
+     * @var float
      * @DataField(name="StockSyncMin", type="float")
      */
     public $stockSyncMin = null;

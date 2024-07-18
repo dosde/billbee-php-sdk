@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee API package.
  *
- * Copyright 2017 - 2021 by Billbee GmbH
+ * Copyright 2017 - 2020 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -17,88 +17,77 @@ use Psr\Log\LoggerInterface;
 
 class DiagnosticsLogger implements LoggerInterface
 {
-    const EMERGENCY = 'EMERGENCY';
-    const ALERT = 'ALERT';
-    const CRITICAL = 'CRITICAL';
-    const ERROR = 'ERROR';
-    const WARNING = 'WARNING';
-    const NOTICE = 'NOTICE';
-    const INFO = 'INFO';
-    const DEBUG = 'DEBUG';
-    /** @var string */
     private $logFile;
 
     public function __construct($logFile = null)
     {
         if ($logFile === null) {
             $filename = sprintf('billbee_api_%s.log', date('Y-m-d-H-i-s'));
-            $logFile = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $filename;
+            $logFile = sprintf('%s/%s', __DIR__, $filename);
+            if (stristr($logFile, '/vendor/')) {
+                $parts = explode('/', '/vendor');
+                $logFile = $parts[0] . $filename;
+            }
         }
 
-        $this->logFile = $logFile;
-    }
+        echo "Diagnostics Output at " . $logFile . PHP_EOL;
 
-    /**
-     * @return string The path to the log file
-     */
-    public function getLogFile()
-    {
-        return $this->logFile;
+        $this->logFile = $logFile;
     }
 
     /** @inheritdoc */
     public function emergency($message, array $context = array())
     {
-        $this->log(self::EMERGENCY, $message, $context);
+        $this->log('EMERGENCY', $message, $context);
     }
 
     /** @inheritdoc */
     public function alert($message, array $context = array())
     {
-        $this->log(self::ALERT, $message, $context);
+        $this->log('ALERT', $message, $context);
     }
 
     /** @inheritdoc */
     public function critical($message, array $context = array())
     {
-        $this->log(self::CRITICAL, $message, $context);
+        $this->log('CRITICAL', $message, $context);
     }
 
     /** @inheritdoc */
     public function error($message, array $context = array())
     {
-        $this->log(self::ERROR, $message, $context);
+        $this->log('ERROR', $message, $context);
     }
 
     /** @inheritdoc */
     public function warning($message, array $context = array())
     {
-        $this->log(self::WARNING, $message, $context);
+        $this->log('WARNING', $message, $context);
     }
 
     /** @inheritdoc */
     public function notice($message, array $context = array())
     {
-        $this->log(self::NOTICE, $message, $context);
+        $this->log('NOTICE', $message, $context);
     }
 
     /** @inheritdoc */
     public function info($message, array $context = array())
     {
-        $this->log(self::INFO, $message, $context);
+        $this->log('INFO', $message, $context);
     }
 
     /** @inheritdoc */
     public function debug($message, array $context = array())
     {
-        $this->log(self::DEBUG, $message, $context);
+        $this->log('DEBUG', $message, $context);
     }
 
     /** @inheritdoc */
     public function log($level, $message, array $context = array())
     {
-        $level = str_pad($level . ':', 10, ' ', STR_PAD_RIGHT);
-
+        $level = str_pad($level . ':', 9, ' ', STR_PAD_RIGHT);
+        /** @noinspection PhpUnhandledExceptionInspection */
         $date = (new DateTime('now'))->format('Y-m-d H:i:s.v');
         $line = sprintf(
             "[%s] %s Message: %s; Context: %s\n",

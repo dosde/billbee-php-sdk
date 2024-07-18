@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee API package.
  *
- * Copyright 2017 - 2021 by Billbee GmbH
+ * Copyright 2017 - 2020 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -12,9 +12,7 @@
 
 namespace BillbeeDe\BillbeeAPI\Model;
 
-use JsonSerializable;
-
-class Stock implements JsonSerializable
+class Stock implements \JsonSerializable
 {
     /**
      * The SKU of the Product
@@ -24,7 +22,7 @@ class Stock implements JsonSerializable
 
     /**
      * The Id of the stock
-     * @var int|null
+     * @var int
      */
     protected $stockId = null;
 
